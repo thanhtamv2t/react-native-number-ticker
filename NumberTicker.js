@@ -1,19 +1,20 @@
+
 import React, {Component} from "react";
 import {Animated, Easing, StyleSheet, Text, View} from "react-native";
 import PropTypes from "prop-types";
 
 const NumberTicker = ({style, textSize = 35, textStyle, number, duration}) => {
-
+    const textLength = (number + '').length;
     const mapToDigits = () => {
-        return (number + '').split('').map((data) => {
-            if (data === '.' || data === ',') {
+        return (number + '').split('').map((data,index) => {
+            if (data === '.' || data === ',' || data === '$') {
                 return (
-                    <Text key={data} style={[textStyle, {fontSize: textSize}]}>{data}</Text>
+                    <Text key={`${data}${index}`} style={[textStyle, {fontSize: textSize}]}>{data}</Text>
                 );
             }
             return (
                 <TextTicker
-                    key={data}
+                    key={`${data}${index}`}
                     textSize={textSize}
                     textStyle={textStyle}
                     targetNumber={parseFloat(data, 10)}
@@ -24,8 +25,8 @@ const NumberTicker = ({style, textSize = 35, textStyle, number, duration}) => {
     };
 
     return (
-        <View style={style}>
-            <View style={{flexDirection: 'row'}}>
+        <View style={[style, { alignSelf:"center"}]}>
+            <View style={{flexDirection: 'row', alignSelf:"center"}}>
                 {mapToDigits()}
             </View>
         </View>
@@ -83,6 +84,7 @@ class TextTicker extends Component {
 
 
     renderNumbers = (styles) => {
+
         return this.numberList.map((data) => {
             return (
                 <Text key={data.id} style={[this.props.textStyle, styles.text]}>{data.id}</Text>
