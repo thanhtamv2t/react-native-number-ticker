@@ -7,7 +7,7 @@ const NumberTicker = ({style, textSize = 35, textStyle, number, duration}) => {
     const textLength = (number + '').length;
     const mapToDigits = () => {
         return (number + '').split('').map((data,index) => {
-            if (data === '.' || data === ',' || data === '$') {
+            if (data === '.' || data === ',' || data === '$' || isNaN(data)) {
                 return (
                     <Text key={`${data}${index}`} style={[textStyle, {fontSize: textSize}]}>{data}</Text>
                 );
